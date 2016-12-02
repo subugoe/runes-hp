@@ -1,0 +1,30 @@
+
+plugin.tx_adwgoerunes_runes {
+	view {
+		# cat=plugin.tx_adwgoerunes_runes/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:adw_goe_runes/Resources/Private/Templates/
+		# cat=plugin.tx_adwgoerunes_runes/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:adw_goe_runes/Resources/Private/Partials/
+		# cat=plugin.tx_adwgoerunes_runes/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:adw_goe_runes/Resources/Private/Layouts/
+	}
+	persistence {
+		# cat=plugin.tx_adwgoerunes_runes//a; type=string; label=Default storage PID
+		storagePid =
+	}
+}
+
+plugin.tx_adwgoerunes_runenprojekt {
+	view {
+		# cat=plugin.tx_adwgoerunes_runenprojekt/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:adw_goe_runes/Resources/Private/Templates/
+		# cat=plugin.tx_adwgoerunes_runenprojekt/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:adw_goe_runes/Resources/Private/Partials/
+		# cat=plugin.tx_adwgoerunes_runenprojekt/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:adw_goe_runes/Resources/Private/Layouts/
+	}
+	persistence {
+		# cat=plugin.tx_adwgoerunes_runenprojekt//a; type=string; label=Default storage PID
+		storagePid =
+	}
+}

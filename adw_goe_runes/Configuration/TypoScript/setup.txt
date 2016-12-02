@@ -1,0 +1,76 @@
+
+
+
+plugin.tx_adwgoerunes_runenprojekt {
+	persistence {
+		classes {
+			tx_adwgoerunes_domain_model_rpfind  {
+				mapping {
+					tableName = rp_find
+					columns {
+						findno.mapOnProperty = findno;
+						object.mapOnProperty = object;
+						obtype1.mapOnProperty = obtype1;
+						obtype2.mapOnProperty = obtype2;
+						findspt.mapOnProperty = findspt;
+						area.mapOnProperty = area;
+						country.mapOnProperty = country;
+						dating.mapOnProperty = dating;
+						inscript.mapOnProperty = inscript;
+						categor.mapOnProperty = categor;
+						genuity.mapOnProperty = genuity;
+						standard.mapOnProperty = standard;
+						presloc.mapOnProperty = presloc;
+						picture.mapOnProperty = picture;
+						comment.mapOnProperty = comment;
+					}
+				}
+			}
+		}
+	}
+}
+
+
+plugin.tx_adwgoerunes_runenprojekt {
+	view {
+		templateRootPaths.0 = {$plugin.tx_adwgoerunes_runenprojekt.view.templateRootPath}
+		partialRootPaths.0 = {$plugin.tx_adwgoerunes_runenprojekt.view.partialRootPath}
+		layoutRootPaths.0 = {$plugin.tx_adwgoerunes_runenprojekt.view.layoutRootPath}
+	}
+	persistence {
+		storagePid = {$plugin.tx_adwgoerunes_runenprojekt.persistence.storagePid}
+	}
+}
+
+plugin.tx_adwgoerunes._CSS_DEFAULT_STYLE (
+	textarea.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+
+	input.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+
+	.tx-adw-goe-runes table {
+		border-collapse:separate;
+	}
+
+	.tx-adw-goe-runes table th {
+		font-weight:bold;
+	}
+
+	.tx-adw-goe-runes table td {
+		vertical-align:top;
+	}
+
+	.typo3-messages .message-error {
+		color:red;
+	}
+
+	.typo3-messages .message-ok {
+		color:green;
+	}
+
+)

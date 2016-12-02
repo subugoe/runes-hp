@@ -1,0 +1,158 @@
+{namespace v=FluidTYPO3\Vhs\ViewHelpers}
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<f:layout name="Default" />
+
+<f:section name="main">
+	<div class="feedbackbtn">
+		<button id="feedbackBtn">Fehler / Problem melden</button>
+	</div>
+
+	<f:comment> ------------------------------------------------------------------------------------------------------ </f:comment>
+	<f:comment> Rendering of the letters and links on the left side </f:comment>
+	<div class="alphabetlist_rp">	
+		<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100">
+		<f:for each="{letters}" as="letter">		
+			<f:if condition="{letter} == {AFB}">
+			<f:then>
+				<tr><td class="alphabet_active" width='100%' >{letter}	</td></tr>   
+			</f:then>
+			<f:else>
+				<tr><td class="alphabet_inactive"  width='100%'>
+				<f:link.action action="listtest" arguments="{AFB : letter}" class="alphabet_link">{letter}</f:link.action>
+				</td></tr>      	
+			</f:else>
+			</f:if>
+		</f:for>	
+	 	</table> 
+	</div>
+
+	<f:comment> ------------------------------------------------------------------------------------------------------ </f:comment>
+	<f:comment> Rendering of resultset </f:comment>
+	<div class="alphabetresults_rp">	             
+	  <table>  
+	  
+	  	<f:comment>
+	  		This code will render the results according to their type. Normal findings are rather simple, while
+	  		the roots of words are grouped.
+	  	</f:comment>		
+		
+		<f:if condition="{resultmode} == 'default'">
+			<f:then> 
+			  <f:for each="{findings}" as="find">	                
+				  <tr>	
+					  <td class="alphabetresult_heading" valign='top' align='left'>{find.findspt}</td>
+					  <td width='5'></td><td><a href='steckbrief2.asp?findno=190&AFB=A'>{find.object}</a></td>
+				  </tr>        	                        
+				</f:for>
+		 	</f:then>
+		 		<f:comment> ------------------------------------------------------------------------------------------------------ </f:comment>
+			 <f:else>
+
+				<v:variable.set name="lastRoot" value="" />
+			  	<f:for each="{findings}" as="find" iteration="iter">
+			  		<f:if condition="{resultmode} == 'wurzel'">
+			  			<f:then>
+			  		 		<v:variable.set name="curRoot" value="{find.root}" />
+			  		 	</f:then>
+			  		 	<f:else>
+			  		 		<v:variable.set name="curRoot" value="{find.gmc}" />
+			  		 	</f:else>
+		  		 	</f:if>			  	
+				  		 	
+			  		<f:if condition="{AFB} != '?'">
+				  		<f:then>
+				  			<v:variable.set name="curRoot" value="<v:format.replace substring='?' content='{curRoot}' />" />
+				  		</f:then>
+			  	    </f:if>
+					<v:variable.set name="curRoot" value="<v:format.replace substring='MEMO' content='{curRoot}' />" />
+					<v:variable.set name="curRoot" value="<v:format.replace substring=' ' content='{curRoot}' />" />
+				  		  		  	
+					<f:if condition="{curRoot} == {lastRoot}"> 
+					 	<f:then> - </f:then>
+					  	<f:else>
+							<f:if condition="{iter.index} > 0">
+								<f:then></td></f:then>
+							</f:if>
+								
+	                		<tr><td class="alphabetresult_heading" valign='top' align='left'>{curRoot}</td><td width='15'></td><td>
+					  	</f:else>
+				  	</f:if>
+				  	
+				  	<a href='wortmaterial3.asp?wordno=(findno)'>{find.word}</a>
+				  	<v:variable.set name="lastRoot" value="{curRoot}" />
+		    	</f:for>
+		  	</f:else>
+		  </f:if>
+	 </td></tr></table>       	    
+	</div>
+	
+	<!-------------------------------- The Feedback Modal -------------------------->
+	<div id="feedbackModal" class="modal">
+	
+	  <!-- Modal content -->
+	  <div class="modal-content">
+	    <div class="title">
+	      <span class="closeFeedback"><img src="fileadmin/runenprojekt/icons/cancel_16_black.png"></span>
+	      <center><h1>Problem / Fehler melden</h1></center>
+	    </div>
+	    <div class="modal-body">
+	
+	      <f:form method="post" action="sendErrorReport" id="contact"  arguments="{personName:personName}">
+	      	<p class="formtext">
+	      		Vielen Dank, dass Sie uns einen Fehler auf dieser Seite mitteilen möchten. Sie können uns optional noch eine kurze Beschreibung des Fehlers und eine Kontaktadresse hinterlassen.
+	      		<br /><br />
+	      		<b>Seite:</b> Alphabet, Typ {resultmode}<br />
+	      		<b>Buchstabe:</b> {AFB}<br />
+	      		<b>Datum:</b> <f:format.date format="d.m.Y H:i:s" date="now" />
+	      	</p>
+	      	<f:form.textfield type="hidden" name="internalMessage" value="<b>Runenprojekt</b><br /><b>Seite:</b> Alphabet, Typ {resultmode}<br /><b>Buchstabe:</b> {AFB}<br /><br /><b>Datum:</b> <f:format.date format='d.m.Y H:i:s' date='now' />" />
+	      	<fieldset>
+		    	 <f:form.textfield name="personName" placeholder="Ihr Name(optional)" value="" />
+		     </fieldset>
+		     <fieldset>
+		    	 <f:form.textfield name="personMail" placeholder="Ihre Email-Adresse (optional)" value="" type="email" />
+		    </fieldset>
+		    <fieldset>
+		    	<f:form.textarea name="personMessage" placeholder="Ihre Nachricht (optional)" value="" />
+		    </fieldset>
+		    <fieldset>
+		    	<f:form.submit value="Absenden" name="submit" id="contact-submit" />
+		    </fieldset>
+		    
+		  </f:form>
+	    </div>
+	   </div>
+	
+	</div>
+	
+	<script>
+		// Get the modal
+		var modal = document.getElementById('feedbackModal');
+		
+		// Get the button that opens the modal
+		var btn = document.getElementById("feedbackBtn");
+		
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("closeFeedback")[0];
+		
+		// When the user clicks the button, open the modal 
+		btn.onclick = function() {
+		    modal.style.display = "block";
+		}
+		
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function() {
+		    modal.style.display = "none";
+		}
+		
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+		    if (event.target == modal) {
+		        modal.style.display = "none";
+		    }
+		}
+	</script>
+	
+</f:section>

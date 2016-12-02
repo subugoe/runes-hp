@@ -1,0 +1,314 @@
+{namespace v=FluidTYPO3\Vhs\ViewHelpers}
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<f:layout name="Default" />
+
+<f:section name="main">
+
+	<f:for each="{findresults}" as="find">	
+		<div class="pagetitle">
+				<h1>Steckbrief: {find.traeger_typ} von {find.beschreibung_de}</h1>
+		</div>
+		
+		<div class="content large">			
+			<div class="element no-top-radius">
+			<div>
+			
+			<script>
+			  function initMap() {
+				var uluru = <![CDATA[{]]>lat: {find.g_lat}, lng: {find.g_long}<![CDATA[}]]>;
+				var map = new google.maps.Map(document.getElementById('map'), {
+				  zoom: 12,
+				  center: uluru
+				});
+				var marker = new google.maps.Marker({
+				  position: uluru,
+				  map: map
+				});
+			  }
+			</script>
+			<script async defer
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4Gv_xvPY58mlcZd6jxFAroCjnOtv4c0w&callback=initMap">
+			</script>
+			
+			<div id="map"></div>
+			
+			<div class="element seemless">
+					<table style="padding: 0px 5px 0px 5px;">
+						<tr>
+							<td class="caption">Siglen</td><td class="value">
+								<f:for each="{sigils}" as="sigil" iteration="iter">
+									<f:if condition="{iter.index} > 0">
+										<f:then>|</f:then>
+									</f:if>
+									<f:if condition="{sigil.ist_hauptsigle} == 0">
+										<f:then>{sigil.sigle}</f:then>
+										<f:else><b>{sigil.sigle}</b></f:else>
+									</f:if>
+								</f:for>							
+							</td> 
+						</tr>
+						<tr>
+							<td class="caption">Fundort</td><td class="value">{find.beschreibung_de} ({find.gemeinde}, {find.bezirk}, {find.landschaft}, {find.land})</td> 
+						</tr>
+						<tr>
+							<td class="caption">Fundjahr</td><td class="value">{find.fundjahr}</td> 
+						</tr>
+						<tr>
+							<td class="caption">GIS-Daten</td><td class="value">({find.g_lat}, {find.g_long})</td> 
+						</tr>
+						<tr>
+							<td class="caption">Kontext</td><td class="value">{find.kontext}</td> 
+						</tr>
+						<tr>
+							<td class="caption">Kommentar</td><td class="value">{find.kommentar_de}</td>
+						</tr>
+					</table>
+			</div>
+			
+			<div class="title">
+				<h3>Daten zum Objekt</h3>
+			</div>
+			<div class="element bordered">
+				<div class="tablefloaters borderright">
+					<table>
+						<tr>
+							<td class="caption">Träger</td><td class="value">{find.traeger_typ}</td> 
+						</tr>
+						<tr>
+							<td class="caption">Suffix</td><td class="value">{find.suffix_de}</td> 
+						</tr>
+						<tr>
+							<td class="caption">Abmessungen</td><td class="value">{find.abmessungen}</td> 
+						</tr>
+						<tr>
+							<td class="caption">Zustand</td><td class="value">{find.obj_zustand_de}</td>
+						</tr>
+						
+					</table>
+				</div>
+				<div class="tablefloaters borderright">
+					<table>
+						<tr>
+							<td class="caption">Material</td><td class="value">{find.mat_de}</td> 
+						</tr>
+						<tr>
+							<td class="caption">Materialklasse</td><td class="value">{find.matclass_de}</td> 
+						</tr>
+						<tr>
+							<td class="caption">Materialdetail</td><td class="value">{find.material_spezial}</td>
+						</tr>
+						<tr>
+							<td class="caption">Vollständig</td><td class="value">{find.obj_vollst_de}</td> 
+						</tr>
+					</table>
+				</div>
+				<div class="tablefloaters">
+					<table>
+						<tr>
+							<td class="caption">Objekttyp</td><td class="value">{find.obj_typ_de}</td> 
+						</tr>
+						<tr>
+							<td class="caption">Objektklasse</td><td class="value">{find.obj_class_de}</td> 
+						</tr>
+						<tr>
+							<td class="caption">Externe Datierung</td><td class="value">{find.dat_extern_von}-{find.dat_extern_bis}</td>
+						</tr>
+						<tr>
+							<td class="caption">Datierungsart</td><td class="value">{find.dat_art}</td> 
+						</tr>
+					</table>
+				</div>
+				<br style="clear:both;">
+			</div>
+
+			<div class="title">
+				<h3>Daten zur Inschrift</h3>
+			</div>
+			<div class="element bordered">
+				<div class="tablefloaters">
+					<table>
+						<tr>
+							<td class="caption">Runenreihe</td><td class="value">{find.ins_runenreihe}</td> 
+						</tr>
+						<tr>
+							<td class="caption">Vollständig</td><td class="value">{find.ins_vollstaendig}</td> 
+						</tr>
+						<tr>
+							<td class="caption">Zustand</td><td class="value">{find.ins_zustand}</td> 
+						</tr>
+						<tr>
+							<td class="caption">Hat Beizeichen?</td><td class="value">{find.hat_beizeichen}</td>
+						</tr>
+						
+					</table>
+				</div>
+				<div class="tablefloaters inscription">
+					<table>
+						<tr>
+							<td class="caption">Transliteration</td><td class="value">{find.translit}</td> 
+						</tr>
+						<tr>
+							<td class="caption">Transkription</td><td class="value">{find.transcript}</td> 
+						</tr>
+						<tr>
+							<td class="caption">Übersetzung DE</td><td class="value">{find.uebersetzung_de}</td>
+						</tr>
+						<tr>
+							<td class="caption">Übersetzung EN</td><td class="value">{find.uebersetzung_en}</td> 
+						</tr>
+					</table>
+				</div>
+				
+					<br style="clear:both;">
+						</div>						
+	
+	
+					</div>
+				
+				</div>
+				
+			</div>
+
+							
+			<div class="sidebar small">
+				
+				<div class="element bordered">
+					<div>
+						<div id="case-items">
+							<f:for each="{images}" as="image">
+							 	<img src="{image.link}" style="width: 100%; height: auto; margin: 0px 0px 5px 0px;">
+							</f:for>
+						</div>
+					</div>
+				</div>
+				
+				<div class="title">
+					<h3>Aufbewahrungsort</h3>
+				</div>
+
+				<div class="element bordered">
+					<div>
+						<div id="case-items">
+						
+							<f:switch expression="{find.aufb_modus}">
+							  	<f:case value="0">unbekannt / noch nicht gesetzt</f:case>
+							  	<f:case value="1">†</f:case>
+							  	<f:case value="2">in situ</f:case>
+							  	<f:case value="3">
+									<f:for each="{museum}" as="mus">
+										<b>{mus.name}</b><br/>
+										<f:if condition="{mus.url}"><f:then>
+										Website: <a href="{mus.url}">{mus.url}</a><br/>
+										</f:then></f:if>
+									</f:for>
+									Inventarnummer: {find.inventarnummer}
+								</f:case>
+								<f:case value="4">Privatbesitz</f:case>
+								<f:case value="5">anderer Aufbewahrungsort</f:case>
+							  	<f:case default="TRUE">Keine Informationen vorhanden.</f:case>
+							</f:switch>
+						
+						</div>
+					</div>
+				</div>
+				
+				<div class="title">
+					<h3>Weiterführende Links</h3>
+				</div>
+				<div class="element bordered">
+					<div>
+						<div id="case-items">
+						<center>
+							<a href="http://www.runenprojekt.uni-kiel.de/abfragen/steckbrief2.asp?findno=156&AFB=H">Eintrag im Runenprojekt der Uni Kiel</a><br>
+							<a href="http://www.runenprojekt.uni-kiel.de/abfragen/steckbrief2.asp?findno=156&AFB=H">Eintrag bei runer.dk</a><br>
+							<a href="http://www.runenprojekt.uni-kiel.de/abfragen/steckbrief2.asp?findno=156&AFB=H">Suche nach ähnlichen Funden</a><br>
+							<a href="http://www.runenprojekt.uni-kiel.de/abfragen/steckbrief2.asp?findno=156&AFB=H">Druckversion</a><br>
+							<button id="feedbackBtn">Fehler / Problem melden</button><br>
+							
+							<a href="">Interner Bereich</a><br /><br />
+							<v:variable.set name="prevFind" value="{findno}-1" />
+							<v:variable.set name="nextFind" value="{findno}+1" />
+							<f:link.action action="steckbrief" arguments="{findno : prevFind}" class="alphabet_link">Vorheriger Fund</f:link.action><br />
+							<f:link.action action="steckbrief" arguments="{findno : nextFind}" class="alphabet_link">Nächster Fund</f:link.action>  
+						</center>
+						</div>
+					</div>
+				</div>
+			</div>
+				
+			<br style="clear:both">
+
+		</div>
+		
+		
+		
+	<!-------------------------------- The Feedback Modal -------------------------->
+	<div id="feedbackModal" class="modal">
+	
+	  <!-- Modal content -->
+	  <div class="modal-content">
+	    <div class="title">
+	      <span class="closeFeedback"><img src="fileadmin/runes/icons/cancel_16_white.png"></span>
+	      <h3>Problem / Fehler melden</h3>
+	    </div>
+	    <div class="modal-body">
+	
+	      <f:form method="post" action="errorReport" id="contact"  arguments="{personName:personName}">
+	      	<p class="formtext">
+	      		Vielen Dank, dass Sie uns einen Fehler auf dieser Seite mitteilen möchten. Sie können uns optional noch eine kurze Beschreibung des Fehlers und eine Kontaktadresse hinterlassen.
+	      		<br /><br />
+	      		<b>Seite:</b> Steckbrief: {find.traeger_typ} von {find.beschreibung_de} (Findno: {find.findno})<br />
+	      		<b>Datum:</b> <f:format.date format="d.m.Y H:i:s" date="now" />
+	      	</p>
+	      	<f:form.textfield type="hidden" name="internalMessage" value="<b>RuneS</b><br /><b>Seite:</b> Steckbrief: {find.traeger_typ} von {find.beschreibung_de} (Findno: {find.findno})<br /><b>Datum:</b> <f:format.date format='d.m.Y H:i:s' date='now' />" />
+	      	<fieldset>
+		    	 <f:form.textfield name="personName" placeholder="Ihr Name(optional)" value="" />
+		     </fieldset>
+		     <fieldset>
+		    	 <f:form.textfield name="personMail" placeholder="Ihre Email-Adresse (optional)" value="" type="email" />
+		    </fieldset>
+		    <fieldset>
+		    	<f:form.textarea name="personMessage" placeholder="Ihre Nachricht (optional)" value="" />
+		    </fieldset>
+		    <fieldset>
+		    	<f:form.submit value="Absenden" name="submit" id="contact-submit" />
+		    </fieldset>
+		    
+		  </f:form>
+	    </div>
+	   </div>
+	
+	</div>
+	
+	<script>
+		// Get the modal
+		var modal = document.getElementById('feedbackModal');
+		
+		// Get the button that opens the modal
+		var btn = document.getElementById("feedbackBtn");
+		
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("closeFeedback")[0];
+		
+		// When the user clicks the button, open the modal 
+		btn.onclick = function() {
+		    modal.style.display = "block";
+		}
+		
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function() {
+		    modal.style.display = "none";
+		}
+		
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+		    if (event.target == modal) {
+		        modal.style.display = "none";
+		    }
+		}
+	</script>
+	
+	</f:for>
+</f:section>
