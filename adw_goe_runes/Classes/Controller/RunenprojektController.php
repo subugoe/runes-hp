@@ -35,8 +35,7 @@ namespace ADWGOE\AdwGoeRunes\Controller;
  * von allen Seiten aufgerufen. Für eine Seite wird im Template unter Setup angegeben, welche
  * Funktionen des Plugins auf dieser Seite angezeigt werden sollen.
  */
-class RunenprojektController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
-{
+class RunenprojektController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 	/**
 	 * Das Repository
 	 */
@@ -59,6 +58,48 @@ class RunenprojektController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
 					$this->request->getPluginName()
 			);
 		}
+	}
+	
+	/**
+	 * Action Steckbrief
+	 * Zeigt den Steckbrief eines Fundes an. Hierfür wird eine findno vorausgesetzt.
+	 * @return void
+	 */
+	public function steckbriefAction() {
+		// Setup der Verbindung
+		$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
+		$rpRepository = $objectManager->get('ADWGOE\\AdwGoeRunes\\Domain\\Repository\\RunenprojektRepository');
+		$rpRepository->initializeObject();
+		
+		///$GLOBALS['TSFE']->page['title'] = test;
+	
+		// Findno ermitteln und wenn nötig bestimmen
+		$findno = $this->request->hasArgument('findno') ? $this->request->getArgument('findno') : 1;
+		$this->view->assign('findno', $findno);
+		 		 
+		// Die Anfrage nach Funden mit diesem Anfangsbuchstaben ausführen
+		$this->view->assign('resultmode', 'default');
+		$this->view->assign('findings', $rpRepository->getFindData($findno));
+		$this->view->assign('images', $rpRepository->getImagesByFindno($findno));
+		
+		$bibdata = $rpRepository->getBibData($findno);
+		$this->view->assign('bibdata', $bibdata);
+		$this->view->assign('bibdata_count', $bibdata->num_rows);
+		
+		$deutungsDaten = $rpRepository->getInterpretations($findno);
+		$this->view->assign('deutungen_count', $deutungsDaten->num_rows);
+		$deutungen = array();
+		for ($i = 0; $i < $deutungsDaten->num_rows; $i++) {
+			$deutungen[$i]['data'] = $deutungsDaten->fetch_array();
+			$deutungen[$i]['lit'] = array();
+			$literDaten = $rpRepository->getIntBibData($deutungen[$i]['data']['intprno']);
+			if($literDaten) {
+				for($j = 0; $j < $literDaten->num_rows; $j++) {
+					$deutungen[$i]['lit'][$j] = $literDaten->fetch_array();
+				}
+			}
+		}
+		$this->view->assign('deutungen', $deutungen);
 	}
 	
     /**
@@ -118,7 +159,7 @@ class RunenprojektController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     	$mail = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Mail\\MailMessage');
     	$mail->setSubject('Runenprojekt: Website-Fehlerreport');
     	$mail->setFrom(array('noreply@jens-bahr.com' => 'Runenprojekt System'));
-    	$mail->setTo(array('ju.bahr@isfas.uni-kiel.de', 'jens_bahr+fnd9ksygquikqfqc1ohn@boards.trello.com'));
+    	$mail->setTo(array('c.zimmermann@isfas.uni-kiel.de', 'u.zimmermann@isfas.uni-kiel.de', 'ju.bahr@isfas.uni-kiel.de', 'jens_bahr+fnd9ksygquikqfqc1ohn@boards.trello.com'));
     	$mail->setBody('Ein Fehler wurde auf der Runenprojekt-Website gemeldet.<br /><br />'.$arguments['internalMessage'].'<br /><br />'
     			.'Person Name: '.$arguments['personName'].'<br />Person Mail: '.$arguments['personMail'].'<br />Person Message: '.$arguments['personMessage'], 'text/html', 'utf-8');
     	$mail->send();

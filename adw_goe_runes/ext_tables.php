@@ -17,5 +17,5 @@ if (!defined('TYPO3_MODE')) {
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'RuneS Database');
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_adwgoerunes_domain_model_example', 'EXT:adw_goe_runes/Resources/Private/Language/locallang_csh_tx_adwgoerunes_domain_model_example.xlf');
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_adwgoerunes_domain_model_example');
+// \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_adwgoerunes_domain_model_example', 'EXT:adw_goe_runes/Resources/Private/Language/locallang_csh_tx_adwgoerunes_domain_model_example.xlf');
+// \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_adwgoerunes_domain_model_example');

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for the RuneS and Runenproject pages</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="report_error">Fehler / Problem melden</label>
+			<label index="rs_youarehere">Sie sind hier: </label>
+			
+			<label index="rs_factsheet">Steckbrief</label>
+			<label index="rs_header_obj">Daten zum Objekt</label>
+			<label index="rs_header_ins">Daten zur Inschrift</label>
+			
+			<label index="rs_factsheet_of">von</label>
+			<label index="rs_sigils">Siglen</label>
+			<label index="rs_fundort">Fundort</label>
+			<label index="rs_gis_daten">GIS-Daten</label>
+			<label index="rs_kontext">Kontext</label>
+			<label index="rs_extdat">Externe Datierung</label>
+			<label index="rs_datart">Datierungsart</label>
+			<label index="rs_translit">Transliteration</label>
+			<label index="rs_translat">Übersetzung</label>
+			<label index="rs_kommentar">Kommentar</label>
+			<label index="rs_traeger">Träger</label>
+			<label index="rs_suffix">Suffix</label>
+			<label index="rs_objtyp">Objekttyp</label>
+			<label index="rs_objklasse">Objektklasse</label>
+			<label index="rs_mat">Material</label>
+			<label index="rs_matklasse">Materialklasse</label>
+			<label index="rs_matdetail">Materialdetail</label>
+			<label index="rs_abmessung">Abmessungen</label>
+			<label index="rs_fundjahr">Fundjahr</label>
+			<label index="rs_objZustand">Zustand</label>
+			<label index="rs_objVollst">Vollständig</label>
+			<label index="rs_runenreihe">Runenreihe</label>
+			<label index="rs_insVollst">Vollständig</label>
+			<label index="rs_insZustand">Zustand</label>
+			<label index="rs_kategorie">Kategorie</label>
+			<label index="rs_beizeichen">Hat Beizeichen?</label>
+			<label index="rs_aufbOrt">Aufbewahrungsort</label>
+			<label index="rs_auf_unbekannt">unbekannt / noch nicht gesetzt</label>
+			<label index="rs_auf_verloren">†</label>
+			<label index="rs_auf_situ">in situ</label>
+			<label index="rs_website">Website</label>
+			<label index="rs_invNummer">Inventarnummer</label>
+			<label index="rs_privatbesitz">Privatbesitz</label>
+			<label index="rs_anderer_AufbewOrt">anderer Aufbewahrungsort</label>
+			<label index="rs_keineInfo">Keine Informationen vorhanden.</label>
+			<label index="rs_weitereLinks">Weiterführende Links</label>
+			<label index="rs_runenprojekt">Eintrag im Runenprojekt der Uni Kiel</label>
+			<label index="rs_runerdk">Eintrag bei runer.dk</label>
+			<label index="rs_aehnlicheFunde">Suche nach ähnlichen Funden</label>
+			<label index="rs_druckversion">Druckversion</label>
+			<label index="rs_vorFund">Vorheriger Fund</label>
+			<label index="rs_naechsFund">Nächster Fund</label>
+			
+			<label index="rs_errorReportHead">Problem / Fehler melden</label>
+			<label index="rs_errorReportText">Vielen Dank, dass Sie uns einen Fehler auf dieser Seite mitteilen möchten. Sie können uns optional noch eine kurze Beschreibung des Fehlers und eine Kontaktadresse hinterlassen.</label>
+			<label index="rs_seite">Seite</label>
+			<label index="rs_datum">Datum</label>
+			<label index="rs_ihrName">Ihr Name (optional)</label>
+			<label index="rs_ihreEmail">Ihre Email-Adresse (optional)</label>
+			<label index="rs_ihreNachricht">Ihre Nachricht (optional)</label>
+			<label index="rs_absenden">Absenden</label>
+			
+			<label index="back">Zurück</label>
+			
+			<label index="ja">ja</label>
+			<label index="nein">nein</label>
+		</languageKey>
+		
+		<languageKey index="en" type="array">
+			<label index="report_error">Report an error</label>
+			<label index="rs_youarehere">You are here: </label>
+			
+			<label index="rs_factsheet">Factsheet</label>
+			<label index="rs_header_obj">Data about the object</label>
+			<label index="rs_header_ins">Data about the inscription</label>
+			
+			<label index="rs_factsheet_of">of</label>
+			<label index="rs_sigils">Sigils</label>
+			<label index="rs_fundort">Find spot</label>
+			<label index="rs_gis_daten">GIS data</label>
+			<label index="rs_kontext">Context</label>
+			<label index="rs_extdat">External dating</label>
+			<label index="rs_datart">Method of dating</label>
+			<label index="rs_translit">Transliteration</label>
+			<label index="rs_translat">Translation</label>
+			<label index="rs_kommentar">Comment</label>
+			<label index="rs_traeger">Object</label>
+			<label index="rs_suffix">Suffix</label>
+			<label index="rs_objtyp">Type of object</label>
+			<label index="rs_objklasse">Class of object</label>
+			<label index="rs_mat">Material</label>
+			<label index="rs_matklasse">Material class</label>
+			<label index="rs_matdetail">Material detail</label>
+			<label index="rs_abmessung">Dimensions</label>
+			<label index="rs_fundjahr">Year of discovery</label>
+			<label index="rs_objZustand">State</label>
+			<label index="rs_objVollst">Completeness</label>
+			<label index="rs_runenreihe">Rune row</label>
+			<label index="rs_insVollst">Completeness</label>
+			<label index="rs_insZustand">State</label>
+			<label index="rs_kategorie">Category</label>
+			<label index="rs_beizeichen">Has additional markings?</label>
+			<label index="rs_aufbOrt">Place of storage</label>
+			<label index="rs_auf_unbekannt">unknown / not entered yet</label>
+			<label index="rs_auf_verloren">†</label>
+			<label index="rs_auf_situ">in situ</label>
+			<label index="rs_website">Website</label>
+			<label index="rs_invNummer">Inventory number</label>
+			<label index="rs_privatbesitz">Private property</label>
+			<label index="rs_anderer_AufbewOrt">other place of storage</label>
+			<label index="rs_keineInfo">No information available.</label>
+			<label index="rs_weitereLinks">Related Links</label>
+			<label index="rs_runenprojekt">Entry on the Rune Project Kiel</label>
+			<label index="rs_runerdk">Entry on runer.dk</label>
+			<label index="rs_aehnlicheFunde">Search for similar finds</label>
+			<label index="rs_druckversion">Print version</label>
+			<label index="rs_vorFund">Previous find</label>
+			<label index="rs_naechsFund">Next find</label>
+			
+			<label index="rs_errorReportHead">Report an error</label>
+			<label index="rs_errorReportText">Thank you for reporting an error on our website. You can add your name and contact data, as well as a short description to the report before sending it. </label>
+			<label index="rs_seite">Page</label>
+			<label index="rs_datum">Date</label>
+			<label index="rs_ihrName">Your name (optional)</label>
+			<label index="rs_ihreEmail">Your email (optional)</label>
+			<label index="rs_ihreNachricht">Your message (optional)</label>
+			<label index="rs_absenden">Submit</label>
+			
+			
+			
+			
+			
+			<label index="ja">yes</label>
+			<label index="nein">no</label>
+			<label index="back">back</label>
+		</languageKey>
+	</data>
+</T3locallang>

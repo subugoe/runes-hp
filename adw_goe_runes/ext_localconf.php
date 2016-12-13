@@ -23,6 +23,6 @@ if (!defined('TYPO3_MODE')) {
 	),
 	// non-cacheable actions
 	array(
-		'Runenprojekt' => 'alphabetListe, steckbrief, errorReport',
+		'Runenprojekt' => '',
 	)
 );

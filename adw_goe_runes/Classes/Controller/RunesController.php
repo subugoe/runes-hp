@@ -79,7 +79,6 @@ class RunesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 		$this->view->assign('letters', $letterArray);
 		$this->view->assign('AFB', $AFB);
 		$this->view->assign('findings', $rsRepository->getFindListOrderedStartingLetter($AFB));
-		//$this->factsheetAction();
 	}
 	
     /**
@@ -98,12 +97,14 @@ class RunesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     	// Fundnummer einstellen oder, wenn noch keine übergeben wurde, festlegen (auf 1)
     	$findno = $this->request->hasArgument('findno') ? $this->request->getArgument('findno') : 1;
     	$this->view->assign('findno', $findno); 
+    	$lang = $GLOBALS['TSFE']->sys_language_uid;
     	
     	// Daten abfragen und an den View übergeben
     	$this->view->assign('sigils', $rsRepository->getSigilsByFindno($findno));
     	$this->view->assign('images', $rsRepository->getImagesByFindno($findno));
     	$this->view->assign('museum', $rsRepository->getMuseumForFindno($findno));
-    	$this->view->assign('findresults', $rsRepository->getFindDataByFindno($findno));      
+    	$this->view->assign('findresults', $rsRepository->getFindDataByFindno($findno, $lang == 3 ? "en" : "de"));      
+    
     }
 
     /**
@@ -117,7 +118,7 @@ class RunesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 		$mail = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Mail\\MailMessage');
 		$mail->setSubject('RuneS: Website-Fehlerreport');
 		$mail->setFrom(array('noreply@jens-bahr.com' => 'RuneS System'));
-		$mail->setTo(array('ju.bahr@isfas.uni-kiel.de', 'jens_bahr+fnd9ksygquikqfqc1ohn@boards.trello.com'));
+		$mail->setTo(array('c.zimmermann@isfas.uni-kiel.de', 'u.zimmermann@isfas.uni-kiel.de', 'ju.bahr@isfas.uni-kiel.de', 'jens_bahr+fnd9ksygquikqfqc1ohn@boards.trello.com'));
 		$mail->setBody('Ein Fehler wurde auf der RuneS-Website gemeldet.<br /><br />'.$arguments['internalMessage'].'<br /><br />'
 				.'Person Name: '.$arguments['personName'].'<br />Person Mail: '.$arguments['personMail'].'<br />Person Message: '.$arguments['personMessage'], 'text/html', 'utf-8');
 		$mail->send();

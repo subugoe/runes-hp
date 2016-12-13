@@ -117,7 +117,30 @@ class RunesRepository extends \TYPO3\CMS\Extbase\Persistence\Repository  {
 	 * @param findno Die Fundnummer des Funds
 	 * @return die grundlegenden Daten für einen bestimmten Fund
 	 */
-	public function getFindDataByFindno($findno) {
+	public function getFindDataByFindno($findno, $lang) {
+		if($lang == "en") { 
+			return $this->dbHandle->sql_query("SELECT f.findno, f.fundjahr, f.kommentar_en as kommentar_de, "
+					." p.g_lat, p.g_long, p.beschreibung_de, "
+					." trag.bez_en as traeger_typ, t.suffix_en as suffix_de, t.abmessungen, zust.bez_en as obj_zustand_de, vollObj.bez_en as obj_vollst_de, "
+					." matspez.bez_en as material_spezial, "
+					." t.dat_extern_von, t.dat_extern_bis, datart.bez_en as dat_art, "
+					." m.bez_en as mat_de, mk.bez_en as matclass_de,  "
+					." g.gemeinde, b.bezirk, lan.landschaft, lan.land, "
+					." o.bez_en as obj_typ_de, ok.bez_en as obj_class_de, "
+					." runreihe.bez_en as ins_runenreihe, zustIns.bez_en as ins_zustand, vollIns.bez_en as ins_vollstaendig, i.hat_beizeichen, "
+					." inchar.bez_en as inschrift_charakter, kontex.bez_en as kontext, i.translit, i.translit_graph, i.translit_gen, i.transcript, i.uebersetzung_en as uebersetzung_de, "
+					." auf.modus as aufb_modus, auf.kommentar as aufb_kommentar, auf.g_lat as auf_g_lat, auf.g_long as auf_g_long, auf.inventarnummer "
+					." FROM run_fund f, run_position p, run_gemeinde g, run_bezirk b, run_landschaft lan, run_traeger t, run_material m, "
+					." run_materialklasse mk, run_objekttyp o, run_objektklasse ok, run_inschrift i, run_aufenthaltsort	auf, run_traeger_typ trag, "
+					." run_zustand zust, run_vollst_typ vollObj, run_material_spezial matspez, run_datierungsart datart, "
+					." run_zustand zustIns, run_vollst_typ vollIns, run_runenreihe runreihe, run_inschriftcharakter inchar, run_kontext kontex "
+					." WHERE f.findno = $findno AND p.findno = f.findno AND t.findno = f.findno AND g.id = p.gemeinde_id AND b.id = g.bezirk_id AND lan.id = b.landschaft_id "
+					." AND m.id = t.material AND m.materialklasse = mk.bez_de AND o.id = t.objekttyp AND ok.bez_de = o.objektklasse AND i.findno = f.findno "
+					." AND auf.findno = f.findno AND trag.bez_de = t.traeger_typ AND zust.bez_de = t.zustand AND vollObj.bez_de = t.vollstaendig "
+					." AND matspez.bez_de = t.material_spezial AND datart.bez_de = t.dat_art AND zustIns.bez_de = i.zustand AND vollIns.bez_de = i.vollstaendig "
+					." AND runreihe.bez_de = i.runenreihe AND inchar.bez_de = i.inschrift_charakter AND kontex.bez_de = i.kontext ");
+		}
+		
 		return $this->dbHandle->sql_query("SELECT f.findno, f.fundjahr, f.kommentar_de, "
 				." p.g_lat, p.g_long, p.beschreibung_de, "
 				." t.traeger_typ, t.suffix_de, t.suffix_en, t.abmessungen, t.zustand as obj_zustand_de, t.vollstaendig as obj_vollst_de, t.material_spezial, "

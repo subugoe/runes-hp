@@ -71,7 +71,59 @@ class RunenprojektRepository extends \TYPO3\CMS\Extbase\Persistence\Repository  
 	public function getFindList() {
 		return $this->dbHandle->sql_query("SELECT * FROM rp_find ORDER BY findno");
 	}
-		
+	
+	/**
+	 * Gibt die generellen Daten zu einem Fund. Etwa für einen Steckbrief.
+	 * @param unknown $findno
+	 */
+	public function getFindData($findno) {
+		return $this->dbHandle->sql_query("SELECT * FROM rp_find WHERE findno = ".$findno);
+	}
+	
+	/**
+	 * Gibt die generellen Bibliographie- und Literaturdaten zu einem Fund. 
+	 * @param unknown $findno
+	 */
+	public function getBibData($findno) {
+		return $this->dbHandle->sql_query("SELECT b.auth, b.title1, b.title2, b.year, b.picture, b.bibtype FROM rp_bib b, rp_findbib f WHERE f.findno=".$findno." AND b.bibno=f.bibno ORDER BY b.year ASC;");
+	}
+	
+	    		
+	/**
+	 * Gibt die Deutungen, zu denen es eine Verbindung mit der gegebenen Fundnummer gibt
+	 * @param unknown $findno
+	 */
+	public function getInterpretations($findno) {
+		return $this->dbHandle->sql_query(
+				 " SELECT i.intprno, i.intpr, i.trslgerm, i.language, i.reading, i.probable, i.comment "
+				." FROM rp_intpr i"
+				." WHERE EXISTS "
+				."   (SELECT * FROM rp_fint f WHERE f.intprno = i.intprno AND f.findno = ".$findno.") "
+				." ORDER BY i.intprno;");
+	}
+	
+	/**
+	 * Gibt die Literatur zu einer Deutung
+	 * @param unknown $findno
+	 */
+	public function getIntBibData($intprno) {
+		return $this->dbHandle->sql_query(
+				 " SELECT * FROM rp_bib b "
+				." WHERE EXISTS (SELECT * FROM rp_intbib ib WHERE ib.bibno = b.bibno AND ib.intprno = ".$intprno.") "
+				." ORDER BY b.year ASC;");
+	}		
+	
+	/**
+	 * Gibt alle Bildlinks zu einem bestimmten Fund. Diese kommen aus der RuneS-Datenbank!
+	 * @param findno Die Fundnummer des Funds
+	 * @return alle Bildlinks zu einem bestimmten Fund
+	 */
+	public function getImagesByFindno($findno) {
+		return $this->dbHandle->sql_query(
+				"SELECT * FROM run_abbildung a "
+				." WHERE EXISTS (SELECT * FROM run_link_fund_abbildung l WHERE l.findno = $findno AND a.id = l.id)");
+	}
+	
 	/**
 	 * Gibt eine Lister aller Wörter oder german. Stämme, welche mit einem bestimmten Buchstaben beginnen. Wird für
 	 * Anfrage 16, "Wurzel", und Anfrage 17, "Germanischer Stamm", verwendet

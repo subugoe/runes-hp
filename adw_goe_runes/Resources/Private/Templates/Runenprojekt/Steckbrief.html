@@ -5,88 +5,333 @@
 <f:layout name="Default" />
 
 <f:section name="main">
-	<div class="feedbackbtn">
-		<button id="feedbackBtn">Fehler / Problem melden</button>
+	<link rel="stylesheet" type="text/css" href="/fileadmin/runenprojekt/scripts/datatables.min.css"/>
+	<script type="text/javascript" src="/fileadmin/runenprojekt/scripts/jQuery-2.2.3/jquery-2.2.3.js"></script>
+	<script type="text/javascript" src="/fileadmin/runenprojekt/scripts/datatables.min.js"></script>
+
+
+
+	
+
+	<f:for each="{findings}" as="find">	
+
+	<div class="breadcrumbtext">
+		Sie sind hier: <a href="">Datenbankabfragen</a> » <a href="">Alphabetische Liste</a> » <a href="">Steckbrief: {find.object} von {find.findspt}</a>
+		<div class="flags">
+			<a id="feedbackBtn">Fehler / Problem melden</a>
+		</div>
 	</div>
 
-	<f:comment> ------------------------------------------------------------------------------------------------------ </f:comment>
-	<f:comment> Rendering of the letters and links on the left side </f:comment>
-	<div class="alphabetlist_rp">	
-		<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100">
-		<f:for each="{letters}" as="letter">		
-			<f:if condition="{letter} == {AFB}">
-			<f:then>
-				<tr><td class="alphabet_active" width='100%' >{letter}	</td></tr>   
-			</f:then>
-			<f:else>
-				<tr><td class="alphabet_inactive"  width='100%'>
-				<f:link.action action="listtest" arguments="{AFB : letter}" class="alphabet_link">{letter}</f:link.action>
-				</td></tr>      	
-			</f:else>
+ 	<h1>Steckbrief: <b>{find.object}</b> von <b>{find.findspt} ({find.country}, {find.area})</b></h1>
+    <br />
+    <br />
+
+	
+		<table border="0" cellpadding="4" cellspacing="4" style="border-collapse: collapse" bordercolor="#111111" width="100%">
+	      <tr>
+	        <td align="center" valign="top" width="300">
+	        
+	        <f:if condition="{images}">
+	        	<f:then>
+	       			 <f:for each="{images}" as="image">
+						<img src="{image.link}" style="width: 100%; height: auto; margin: 0px 0px 5px 0px;">
+					</f:for>
+				</f:then>
+				<f:else>
+					<img border="0" src="/fileadmin/runenprojekt/fotofolgt.jpg">							
+				</f:else>
 			</f:if>
-		</f:for>	
-	 	</table> 
-	</div>
-
-	<f:comment> ------------------------------------------------------------------------------------------------------ </f:comment>
-	<f:comment> Rendering of resultset </f:comment>
-	<div class="alphabetresults_rp">	             
-	  <table>  
-	  
-	  	<f:comment>
-	  		This code will render the results according to their type. Normal findings are rather simple, while
-	  		the roots of words are grouped.
-	  	</f:comment>		
-		
-		<f:if condition="{resultmode} == 'default'">
-			<f:then> 
-			  <f:for each="{findings}" as="find">	                
-				  <tr>	
-					  <td class="alphabetresult_heading" valign='top' align='left'>{find.findspt}</td>
-					  <td width='5'></td><td><a href='steckbrief2.asp?findno=190&AFB=A'>{find.object}</a></td>
-				  </tr>        	                        
-				</f:for>
-		 	</f:then>
-		 		<f:comment> ------------------------------------------------------------------------------------------------------ </f:comment>
-			 <f:else>
-
-				<v:variable.set name="lastRoot" value="" />
-			  	<f:for each="{findings}" as="find" iteration="iter">
-			  		<f:if condition="{resultmode} == 'wurzel'">
-			  			<f:then>
-			  		 		<v:variable.set name="curRoot" value="{find.root}" />
-			  		 	</f:then>
-			  		 	<f:else>
-			  		 		<v:variable.set name="curRoot" value="{find.gmc}" />
-			  		 	</f:else>
-		  		 	</f:if>			  	
-				  		 	
-			  		<f:if condition="{AFB} != '?'">
-				  		<f:then>
-				  			<v:variable.set name="curRoot" value="<v:format.replace substring='?' content='{curRoot}' />" />
-				  		</f:then>
-			  	    </f:if>
-					<v:variable.set name="curRoot" value="<v:format.replace substring='MEMO' content='{curRoot}' />" />
-					<v:variable.set name="curRoot" value="<v:format.replace substring=' ' content='{curRoot}' />" />
-				  		  		  	
-					<f:if condition="{curRoot} == {lastRoot}"> 
-					 	<f:then> - </f:then>
-					  	<f:else>
-							<f:if condition="{iter.index} > 0">
-								<f:then></td></f:then>
-							</f:if>
+	        
+	        
+	        </td>
+	        <td align="left" valign="top">
+	        <table class="alternatingBG" border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111">
+	          <tr>
+	            <td align="left" valign="top" nowrap><b>Inschrift:</b></td>
+	            <td align="left" valign="top" width="10" >&nbsp;</td>
+	            <td align="left" valign="top">{find.inscript}</td>
+	          </tr>
+	          <tr>
+	            <td align="left" valign="top" nowrap><b>Standardausgabe:</b></td>
+	            <td align="left" valign="top" width="10">&nbsp;</td>
+	            <td align="left" valign="top">{find.standard}</td>
+	          </tr>
+	          <tr>
+	            <td align="left" valign="top" nowrap><b>Archäologische Datierung:</b></td>
+	            <td align="left" valign="top" width="10">&nbsp;</td>
+	            <td align="left" valign="top">{find.dating}</td>
+	          </tr>
+	          <tr>
+	            <td align="left" valign="top" nowrap><b>Aufbewahrungsort:</b></td>
+	            <td align="left" valign="top" width="10">&nbsp;</td>
+	            <td align="left" valign="top">{find.presloc}</td>
+	          </tr>
+	          <tr>
+	            <td align="left" valign="top" nowrap><b>Kommentar:</b></td>
+	            <td align="left" valign="top" width="10">&nbsp;</td>
+	            <td align="left" valign="top">{find.comment}</td>
+	          </tr>
+	                    
+	          <f:if condition="{find.genuity} != ''">
+		          <f:then>
+			          <tr>
+			            <td align="left" valign="top" nowrap><b>Echtheit:</b></td>
+			            <td align="left" valign="top" width="10">&nbsp;</td>
+			            <td align="left" valign="top">{find.genuity}</td>
+			          </tr>
+		          </f:then>
+	          </f:if>
+	          
+	          <tr>
+	            <td align="left" valign="top" nowrap><b>Archäologischer Text:</b></td>
+	            <td align="left" valign="top" width="10">&nbsp;</td>
+	            <td align="left" valign="top">
+	            	<button id="archaeologieBtn">Archäologischen Text einblenden</button>
+			  		<div id="archaeologie-p">
+			  		
+	            		<p><b>B&uuml;gelfibel von Himling&oslash;je
+								(Himling&oslash;je I)</b> </p>
 								
-	                		<tr><td class="alphabetresult_heading" valign='top' align='left'>{curRoot}</td><td width='15'></td><td>
-					  	</f:else>
-				  	</f:if>
-				  	
-				  	<a href='wortmaterial3.asp?wordno=(findno)'>{find.word}</a>
-				  	<v:variable.set name="lastRoot" value="{curRoot}" />
-		    	</f:for>
-		  	</f:else>
-		  </f:if>
-	 </td></tr></table>       	    
-	</div>
+								
+								<p>1. Fundgeschichte und Fundkontext<br>
+								
+								
+								Die B&uuml;gelfibel von Himling&oslash;je, Herf&oslash;lge
+								sn.,
+								Bj&aelig;verskov hd., Pr&aelig;st&oslash; amt (Seeland),
+								mit hoher Wahrscheinlichkeit einst eine
+								Grabbeigabe, geh&ouml;rt zu der Gruppe d&auml;nischer
+								Kleinfunde mit Runenbeschriftung
+								(<a href="daenischekleinfunde.htm">D&auml;nische
+								Kleinfunde</a>) sowie zur Untergruppe der Prachtfibeln von Frauen
+								(vgl. den typologisch vergleichbaren Fund aus dem schwedischen <a href="4.htm">G&aring;rdl&ouml;sa</a> sowie die
+								d&auml;nischen Rosettenfibeln von <a href="2.htm">Himling&oslash;je
+								II</a>, <a href="6.htm">N&oslash;vling</a>, <a href="5.htm">N&aelig;sbjerg</a>, <a href="188.htm">Skovg&aring;rde</a>, <a href="3.htm">V&aelig;rl&oslash;se</a>). Der
+								Fundplatz, ein arch&auml;ologisch herausragendes
+								Gr&auml;berfeld mit einem
+								Zenit im fr&uuml;hen 3. Jh. (Periode C1b der R&ouml;mischen
+								Kaiserzeit), befindet sich im
+								&ouml;stlichen Seeland in einer strategisch g&uuml;nstigen Lage
+								zum nahegelegenen &Ouml;resund.
+								Ab dem Jahr 1829 kamen zahlreiche Lesefunde bei Kiesentnahmen in einem
+								nat&uuml;rlichen H&uuml;gel (Bauneh&oslash;j) im Areal des
+								Gr&auml;berfelds zutage, darunter die im
+								Jahr 1835 gefundene runenbeschriftete Fibel. Die Funde z&auml;hlten
+								einst
+								wahrscheinlich zu ca. f&uuml;nf Gr&auml;bern (Lund Hansen
+								1995a, 143f.; 1995c, 418; 1998,
+								168; Jacobsen/Moltke 1941/1942, Sp. 286; Krause/Jankuhn 1966, 30).</p>
+								
+								
+								<p>2. Inschriftobjekt<br>
+								
+								
+								Die Gewandnadel (L&auml;nge: 10,2 cm) ist durch
+								vergoldetes Silberpre&szlig;blech, profilierte Silberstifte und
+								eine blaue Glaseinlage
+								verkleidet. Die einst auf dem B&uuml;gel befindliche Scheibe fehlt
+								(Lund Hansen
+								1971, 73f.). Die Nadel z&auml;hlt zu den pre&szlig;blech- und
+								glasverzierten B&uuml;gelfibeln
+								vom Typ Mackeprang IX, die aus einer halbrunden Kopfplatte, einem
+								bandf&ouml;rmigen
+								B&uuml;gel mit zwei markanten Knicken, einer mittig aufgesetzten
+								runden oder ovalen
+								Scheibe und einer rhombischen Fu&szlig;platte zusammengesetzt waren
+								(Mackeprang 1943,
+								14-16, Tafel 2,6; Lund Hansen 1971, 72f.).</p>
+								
+								
+								<p>3. Anbringung und Zustand der Inschrift<br>
+								
+								
+								Die Inschrift (H&ouml;he: 7-12 mm) auf der R&uuml;ckseite der
+								rhombischen Fu&szlig;platte folgt der L&auml;ngsrichtung der
+								Platte und war f&uuml;r andere
+								nicht lesbar (Jacobsen/Moltke 1941/1942, Sp. 286; Krause/Jankuhn 1966,
+								31; Stoklund 1995b,
+								319).</p>
+								
+								
+								<p>4. Verbreitung und Datierung<br>
+								
+								
+								Insgesamt 16 d&auml;nische Kleinfunde, meist Grabfunde,
+								sind mit Runen beschriftet. Die 13 gut bestimmbaren
+								nordeurop&auml;ischen
+								B&uuml;gelfibeln vom Typ Mackeprang IX verteilen sich auf
+								D&auml;nemark, das s&uuml;dliche
+								Schweden und Norwegen, doch Aussagen zur Verbreitung werden dadurch
+								erschwert,
+								da&szlig; m&ouml;glicherweise weitere pre&szlig;blech- und
+								glasverzierte Gewandnadelbruchst&uuml;cke
+								zu diesem Typ z&auml;hlten, ohne da&szlig; dies mit Sicherheit
+								zu ermitteln ist. Die
+								Fibeln sind teils in reich ausgestatteten Gr&auml;bern und teils
+								als Lesefunde auf
+								Gr&auml;berfeldern &uuml;berliefert (Lund Hansen 1971, 73).
+								Wegen der fehlenden
+								Fund&uuml;berlieferung ist das vorliegende St&uuml;ck lediglich
+								typologisch dem Zeitraum
+								vom fr&uuml;hen 3. bis zum fr&uuml;hen 4. Jh. n. Chr. (Periode
+								C1b/C2 der R&ouml;mischen
+								Kaiserzeit) zuzuweisen. Doch die j&uuml;ngsten Untersuchungen zu
+								Perldraht- und Pre&szlig;blechvorkommen
+								in kaiserzeitlichen Mooropfern S&uuml;dskandinaviens
+								k&ouml;nnten eher auf eine Datierung
+								der Fibel in die erste H&auml;lfte des 3. Jh.s (Periode C1b der
+								R&ouml;mischen Kaiserzeit)
+								hindeuten (Lund Hansen 1995a, 143f.; 1998, 168; vgl. jedoch von
+								Carnap-Bornheim/Ilkj&aelig;r
+								1996, 394f.).</p>
+								
+								
+								<p>5. Kulturhistorische/Sozialgeschichtliche
+								Deutung<br>
+								
+								
+								Die Frau, die mit einer Prachtfibel beigesetzt
+								wurde, geh&ouml;rte ohne Zweifel der &ouml;rtlichen Oberschicht
+								an, doch wegen der
+								fehlenden Fund&uuml;berlieferung ist die weitere Ausstattung des
+								Grabs unbekannt.
+								Das Gr&auml;berfeld von <a href="Himlingoeje.htm">Himling&oslash;je</a>
+								war
+								im fr&uuml;hen 3.
+								Jh. n. Chr. (Periode C1b der R&ouml;mischen Kaiserzeit) das
+								bedeutendste auf
+								Seeland, was eine Analyse der zahlreichen reich ausgestatteten
+								Gr&auml;ber unterstreicht.
+								Sie deuten auf ein einst in der N&auml;he befindliches Machtzentrum
+								mit einem Zenit
+								im fr&uuml;hen 3. Jh. (Periode C1b der R&ouml;mischen
+								Kaiserzeit) hin, das jedoch bis
+								heute nicht lokalisiert wurde. Im Laufe des 3. Jh.s fand eine
+								Machtverlagerung
+								nach F&uuml;nen statt (vgl. <a href="GudmeLundeborg.htm">Gudme/Lundeborg</a>).</p>
+								
+								
+								<p><b><font size="2">Literatur</font></b><font size="2"><br>
+								
+								
+								von Carnap-Bornheim/Ilkj&aelig;r 1996; Jacobsen/Moltke
+								1941/1942; Krause/Jankuhn 1966; Lund Hansen 1971; 1995a; 1995c; 1998;
+								Mackeprang 1943; Stoklund 1995b.</font></p>
+					</div>				
+				</td>
+	          </tr>
+	
+	        </table>
+	        <p>&nbsp;</td>
+	      </tr>
+	    </table>
+	
+		<h2>Literaturangaben</h2>         	       
+		<br /> 
+	 	<f:if condition="{bibdata}">
+		    <f:then>	
+				Es wurden {bibdata_count} Literatureinträge gefunden. <button id="literaturBtn">Literaturangaben einblenden</button>	
+			   
+			    <div id="literatur-p">
+			       <table id="literatur" class="display" border="0" cellpadding="2" cellspacing="0" style="border-collapse: collapse" width="100%">
+				       	<thead>
+			              <tr>
+			                <th><b>Nr.</b></th>
+			                <th><b>Autor</b></th>
+			                <th><b>Titel</b></th>
+			                <th><b>Jahr</b></th>
+			              </tr>
+						</thead>
+						
+						<tbody>
+							<f:for each="{bibdata}" as="bib" iteration="bibIter">
+				              	<tr>
+				                    <td valign="top" align="left">{bibIter.cycle}</td>                
+				                    <td nowrap valign="top" align="left">{bib.auth}</td>
+				                    <td valign="top" align="left">{bib.title1} {bib.title2}</td>
+				                    <td valign="top">{bib.year}</td>
+			                  	</tr>
+			                </f:for>		                  
+	                	</tbody>
+			     	</table>
+			     </div>
+		     		     	
+		     	<br />
+	     	</f:then>
+	     	<f:else>
+	     		Zurzeit ist keine archäologische Literaturangabe zu diesem Fund in der Datenbank verfügbar.
+	     	</f:else>
+	     </f:if>
+		     
+		     
+	     <h2>Deutungen</h2>  
+	     <br />
+	     <f:if condition="{deutungen}">
+		     <f:then>
+		     	Es wurden {deutungen_count} Deutungen gefunden.  <button id="deutungenBtn">Deutungen einblenden</button>
+		     	
+		     	<div id="deutungen-p">
+		     		<f:for each="{deutungen}" as="deutung" iteration="deuIter">
+		     		
+		     			<table border="0" width="100%" cellspacing="1" cellpadding="2" style="border-collapse: collapse" bordercolor="#111111">
+			     			<tr class="pending_users">
+                      			<td width="150" bgcolor="#D7D7D7" align="left" valign="top" class="admin"><b>{deuIter.cycle}. Deutung:</b></td>
+	                      		<td align="left" bgcolor="#D7D7D7" valign="top" class="admin">{deutung.data.intpr}</td>
+		                    </tr>	
+		                    <tr class="first-l" >
+		                      	<td width="150" bgcolor="#D7D7D7" align="left" valign="top"><b>Lesung:</b></td>
+		                      	<td align="left" bgcolor="#D7D7D7" valign="top">{deutung.data.reading}</td>
+		                    </tr>
+			                <tr>
+			                  	<td width="150" align="left" valign="top">Sprache:</td>
+			                  	<td align="left" valign="top">{deutung.data.language}</td>
+			                </tr>
+				            <tr class="pending_kommentar">
+	                            <td class="admin" align="left" valign="top">Kommentar:</td>
+	                            <td align="left" valign="top" class="tdpar">{deutung.data.comment}</td>
+	                        </tr>
+			        	</table>    
+			            <br />
+			            <table border="0" cellpadding="2" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber3">
+				              <tr>
+				                <td width="50" valign="top" align="left">&nbsp;</td>
+				                <td valign="top" align="left" colspan="5"><b>Literaturangaben:</b></td>
+				              </tr>
+				
+				              <tr>
+				                <td width="50" valign="top" align="left">&nbsp;</td>
+				                <td valign="top" align="left"><b>Nr.</b></td>
+				                <td nowrap valign="top" align="left"><b>Autor</b></td>
+				                <td valign="top" align="left"><b>Titel</b></td>
+				                <td valign="top" align="left" width="10"><b>Jahr</b></td>
+				                <td valign="top" align="left" width="90">&nbsp;</td>
+				              </tr>
+				             
+				             <f:for each="{deutung.lit}" as="lit" iteration="litIter">
+					              <tr>
+					                <td width="50" valign="top" align="left">&nbsp;</td>
+					                <td valign="top" align="left">{litIter.cycle}</td>                
+					                <td nowrap valign="top" align="left">{lit.auth}</td>
+					                <td valign="top" align="left">{lit.title1} {lit.title2}</td>
+					                <td valign="top" width="10">{lit.year}</td>
+					                <td valign="top" align="left" width="90">&nbsp;</td>
+					              </tr>
+				             </f:for>
+				
+						  </table>
+						  <br />
+						  <br />
+		     		</f:for>
+			    </div>
+	     	<br />	
+		     </f:then>
+		     <f:else>
+		     	Zurzeit sind keine Deutungen zu diesem Objekt in der Datenbank verfügbar. 
+		     </f:else>
+	     </f:if>
+
+
+	</f:for>
 	
 	<!-------------------------------- The Feedback Modal -------------------------->
 	<div id="feedbackModal" class="modal">
@@ -99,12 +344,12 @@
 	    </div>
 	    <div class="modal-body">
 	
-	      <f:form method="post" action="sendErrorReport" id="contact"  arguments="{personName:personName}">
+	      <f:form method="post" action="errorReport" id="contact"  arguments="{personName:personName}">
 	      	<p class="formtext">
 	      		Vielen Dank, dass Sie uns einen Fehler auf dieser Seite mitteilen möchten. Sie können uns optional noch eine kurze Beschreibung des Fehlers und eine Kontaktadresse hinterlassen.
 	      		<br /><br />
-	      		<b>Seite:</b> Alphabet, Typ {resultmode}<br />
-	      		<b>Buchstabe:</b> {AFB}<br />
+	      		<b>Seite:</b> Steckbrief<br />
+	      		<b>Fundnummer:</b> {findno}<br />
 	      		<b>Datum:</b> <f:format.date format="d.m.Y H:i:s" date="now" />
 	      	</p>
 	      	<f:form.textfield type="hidden" name="internalMessage" value="<b>Runenprojekt</b><br /><b>Seite:</b> Alphabet, Typ {resultmode}<br /><b>Buchstabe:</b> {AFB}<br /><br /><b>Datum:</b> <f:format.date format='d.m.Y H:i:s' date='now' />" />
@@ -127,7 +372,37 @@
 	
 	</div>
 	
-	<script>
+	<script type="text/javascript">
+	 	$(document).ready(function() {
+	 		// Funktionalität zum ein- und ausblenden der Literatur
+	 		$('#literatur-p').hide();  
+	 		
+	 	    $('#literatur').DataTable( {
+	 	        "paging":   false,
+	 	        "info":     false,
+	 	        "language": {
+	 	            "search": "Filter: "
+	 	        }
+	 	    } );	 	    
+	
+			 $('#literaturBtn').click(function() {
+				 $('#literatur-p').slideToggle(500);
+	        });
+			 
+			// Funktionalität zum ein- und ausblenden des archäologischen Textes
+			 $('#archaeologie-p').hide();  		     	    
+			 $('#archaeologieBtn').click(function() {
+				 $('#archaeologie-p').slideToggle(500);
+	        });
+			 
+			// Funktionalität zum ein- und ausblenden der Deutungen
+			 $('#deutungen-p').hide();  		     	    
+			 $('#deutungenBtn').click(function() {
+				 $('#deutungen-p').slideToggle(500);
+	        });
+	 	} );
+ 			            		    		
+	
 		// Get the modal
 		var modal = document.getElementById('feedbackModal');
 		

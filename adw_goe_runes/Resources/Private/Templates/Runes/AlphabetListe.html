@@ -6,6 +6,15 @@
 
 <f:section name="main">
 
+	<div class="breadcrumbtext">
+		<b>Sie sind hier: </b><a href="">Datenbankabfragen</a> - <a href="">Alphabetische Liste</a>
+		<div class="flags">
+			<a id="feedbackBtn"><f:translate key="report_error" /></a>
+			<img src="/fileadmin/runes/icons/flag_de.png" />
+			<img src="/fileadmin/runes/icons/flag_en.png" />
+		</div>
+	</div>
+
 <center>
 	<div class="alphabetlist_rp">	
 		
@@ -43,7 +52,7 @@
 	      	<p class="formtext">
 	      		Vielen Dank, dass Sie uns einen Fehler auf dieser Seite mitteilen möchten. Sie können uns optional noch eine kurze Beschreibung des Fehlers und eine Kontaktadresse hinterlassen.
 	      		<br /><br />
-	      		<b>Seite:</b> Steckbrief: {find.traeger_typ} von {find.beschreibung_de} (Findno: {find.findno})<br />
+	      		<b>Seite:</b> Alphabetische Liste {AFB}<br />
 	      		<b>Datum:</b> <f:format.date format="d.m.Y H:i:s" date="now" />
 	      	</p>
 	      	<f:form.textfield type="hidden" name="internalMessage" value="<b>RuneS</b><br /><b>Seite:</b> Steckbrief: {find.traeger_typ} von {find.beschreibung_de} (Findno: {find.findno})<br /><b>Datum:</b> <f:format.date format='d.m.Y H:i:s' date='now' />" />

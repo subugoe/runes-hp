@@ -6,7 +6,7 @@
 
 <f:section name="main">
 	<div class="feedbackbtn">
-		<button id="feedbackBtn">Fehler / Problem melden</button>
+		<button id="feedbackBtn"><f:translate key="report_error" /></button>
 	</div>
 
 	<f:comment> ------------------------------------------------------------------------------------------------------ </f:comment>
@@ -43,7 +43,8 @@
 			  <f:for each="{findings}" as="find">	                
 				  <tr>	
 					  <td class="alphabetresult_heading" valign='top' align='left'>{find.findspt}</td>
-					  <td width='5'></td><td><a href='steckbrief2.asp?findno=190&AFB=A'>{find.object}</a></td>
+					
+					  <td width='5'></td><td>  <f:link.action pageUid="60" action="steckbrief" arguments="{findno : find.findno}">{find.object}</f:link.action></td>
 				  </tr>        	                        
 				</f:for>
 		 	</f:then>
@@ -79,8 +80,7 @@
 	                		<tr><td class="alphabetresult_heading" valign='top' align='left'>{curRoot}</td><td width='15'></td><td>
 					  	</f:else>
 				  	</f:if>
-				  	
-				  	<a href='wortmaterial3.asp?wordno=(findno)'>{find.word}</a>
+				  	<f:link.action pageUid="60" action="steckbrief" arguments="{findno : find.findno}">{find.word}</f:link.action>
 				  	<v:variable.set name="lastRoot" value="{curRoot}" />
 		    	</f:for>
 		  	</f:else>
